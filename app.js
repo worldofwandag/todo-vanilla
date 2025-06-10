@@ -1,42 +1,45 @@
-const list = document.querySelector(".list");
-const input = document.querySelector("input");
+const list = document.querySelector('.list');
+const input = document.querySelector('input');
 
 let todoList = [];
-let todoInputValue = "";
+let todoInputValue = '';
 let counter = 0;
 
 function onInputChange(event) {
-  todoInputValue = event.target.value;
+  todoInputValue = event.target.value
 }
 
 function addTodo() {
   if (!todoInputValue) {
-    return;
+    return
   }
   todoList.push({
     id: counter++,
     task: todoInputValue,
-  });
-  renderTodo();
-  input.value = "";
-  todoInputValue = "";
+  })
+  renderTodos();
+  input.value = '';
+  todoInputValue = '';
+}
+
+function handleInputKeyUp(event) {
+  if (event.key === "Enter") {
+    addTodo();
+  }
 }
 
 function deleteTodo(id) {
-  todoList = todoList.filter((todo) => todo.id !== id);
-  renderTodo();
+  todoList = todoList.filter((todo) => todo.id !== id)
+  renderTodos()
 }
 
-function renderTodo() {
-  list.innerHTML = todoList.map(
-    (element) =>
-      `
-  <li>
-    ${element.task}
-      <button class="todo__delete" onclick="deleteTodo(${element.id})">
-        x
-    </button>
-  </li>
-  `
-  ).join('');
+function renderTodos() {
+  list.innerHTML = todoList.map((element) => 
+  `<li>
+          ${element.task}
+          <button class="todo__delete" onclick="deleteTodo(${element.id})">
+            x
+          </button>
+        </li>
+  `).join('')
 }
